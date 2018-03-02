@@ -1,10 +1,10 @@
 
 import {FORM_INITIALIZE} from 'types'
 
-// @TODO Handle rare case of multiple forms in the view at once.
 const initialState = {}
 
 const initialize = (state, {id, values}) => ({
+  ...state,
   [id]: values
 })
 

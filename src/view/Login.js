@@ -10,6 +10,7 @@ import {P} from 'view/Shared/Typography'
 import {Spread} from 'view/Shared/Utils'
 
 import {submitLogin} from 'actions'
+import {LOGIN_FORM} from 'types'
 import {getTheme} from 'view/theme'
 
 // VISUAL COMPONENTS
@@ -84,32 +85,33 @@ const LoginForm = ({errors, isSubmitting, values}) => (
 )
 
 // FORM CONFIGURATION
-const initialValues = {
-  username: '',
-  password: ''
-}
-
 const validationSchema = yup.object().shape({
   username: yup.string().required().label('Username'),
   password: yup.string().required().label('Password')
 })
 
 // LOGIN CONTAINER
+const mapStateToProps = state => ({
+  initialValues: state.form[LOGIN_FORM]
+})
+
 const mapDispatchToProps = dispatch => ({
   onSubmit: (values, actions) => dispatch(submitLogin({values, actions}))
 })
 
-const Container = ({onSubmit}) => (
+const Container = ({initialValues, onSubmit}) => (
   <Spread>
     <Section>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        validateOnBlur={false}
-        validateOnChange={false}
-        onSubmit={onSubmit}
-        render={props => <LoginForm {...props} />}
-      />
+      {initialValues &&
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          validateOnBlur={false}
+          validateOnChange={false}
+          onSubmit={onSubmit}
+          render={props => <LoginForm {...props} />}
+        />
+      }
     </Section>
     <Section>
       <P small>There is one valid username & password combination:</P>
@@ -119,4 +121,4 @@ const Container = ({onSubmit}) => (
   </Spread>
 )
 
-export const Login = connect(null, mapDispatchToProps)(Container)
+export const Login = connect(mapStateToProps, mapDispatchToProps)(Container)

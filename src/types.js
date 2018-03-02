@@ -5,3 +5,9 @@ export const ROUTE_DASHBOARD = 'routes/DASHBOARD'
 
 // LOGIN ACTIONS
 export const SUBMIT_LOGIN = 'login/SUBMIT_LOGIN'
+
+// GENERAL FORM ACTIONS
+export const FORM_INITIALIZE = 'form/INITIALIZE'
+
+// FORM IDENTIFIERS
+export const LOGIN_FORM = 'LOGIN_FORM'

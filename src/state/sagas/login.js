@@ -1,9 +1,10 @@
 
 import {delay} from 'redux-saga'
-import {call, takeLatest} from 'redux-saga/effects'
+import {call, put, takeLatest} from 'redux-saga/effects'
 
 import {history} from 'router'
-import {SUBMIT_LOGIN} from 'types'
+import {SUBMIT_LOGIN, LOGIN_FORM} from 'types'
+import {initializeForm} from 'actions'
 
 // Fake API call with appropriate responses based on inputs.
 function * loginAPI (username, password) {
@@ -43,5 +44,10 @@ function * submitLogin ({payload: values, meta: actions}) {
 }
 
 export function * init () {
+  // Initialize our form data for the login.
+  yield put(initializeForm(LOGIN_FORM, {
+    username: 'formik',
+    password: ''
+  }))
   yield takeLatest(SUBMIT_LOGIN, submitLogin)
 }
